@@ -3,6 +3,7 @@ package dtx
 import (
 	"bufio"
 	"errors"
+	"fmt"
 	"io"
 	"math"
 	"strings"
@@ -98,11 +99,13 @@ func (g GlobalDispatcher) Dispatch(msg Message) {
 		if "outputReceived:fromProcess:atTime:" == msg.Payload[0] {
 			logmsg, err := nskeyedarchiver.Unarchive(msg.Auxiliary.GetArguments()[0].([]byte))
 			if err == nil {
-				log.WithFields(log.Fields{
-					"msg":  logmsg[0],
-					"pid":  msg.Auxiliary.GetArguments()[1],
-					"time": msg.Auxiliary.GetArguments()[2],
-				}).Info("outputReceived:fromProcess:atTime:")
+				//log.WithFields(log.Fields{
+				//	"msg":  logmsg[0],
+				//	"pid":  msg.Auxiliary.GetArguments()[1],
+				//	"time": msg.Auxiliary.GetArguments()[2],
+				//}).Info("outputReceived:fromProcess:atTime:")
+				// 仅打印到屏幕
+				fmt.Print(fmt.Sprintf("%s", logmsg[0]))
 			}
 			return
 		}

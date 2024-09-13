@@ -33,6 +33,10 @@ func initTUNwrapper(device Device) *tunWrapper {
 		for {
 			e := <-device.Events()
 			log.Infof("event: %v", e)
+			// 设备插拔要退出
+			if fmt.Sprintf("%v", e) == "0" {
+				break
+			}
 		}
 	}()
 	return t

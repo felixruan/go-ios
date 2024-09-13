@@ -276,6 +276,11 @@ func (m *TunnelManager) UpdateTunnels(ctx context.Context) error {
 			d.UserspaceTUNPort = ios.HttpApiPort() + m.portOffset
 			m.portOffset++
 		}
+		// 小于ios17不进行tunnel
+		version, err := ios.GetProductVersion(d)
+		if err != nil || version.LessThan(ios.IOS17()) {
+			continue
+		}
 		t, err := m.startTunnel(ctx, d)
 		if err != nil {
 			log.WithField("udid", udid).

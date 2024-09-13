@@ -386,6 +386,8 @@ func runXUITestWithBundleIdsXcode15Ctx(
 		return make([]TestSuite, 0), fmt.Errorf("runXUITestWithBundleIdsXcode15Ctx: cannot authorize test session: %w", err)
 	}
 	log.WithField("authorized", authorized).Info("authorized")
+	// TODO 用于兼容旧版本wda的启动，这里等待5秒确保wda启动
+	fmt.Println("Capture server listening on")
 
 	ideInterfaceChannel := ideDaemonProxy1.dtxConnection.ForChannelRequest(proxyDispatcher{id: "dtxproxy:XCTestDriverInterface:XCTestManager_IDEInterface"})
 

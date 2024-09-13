@@ -115,7 +115,8 @@ func handleDevice(device *gousb.Device) error {
 	updateInterface(serial)
 	_, loaded := allocatedDevices.LoadOrStore(serial, true)
 	if loaded {
-		slog.Info("device already handled", "serial", serial)
+		// 改为Debug防止刷屏
+		slog.Debug("device already handled", "serial", serial)
 		return nil
 	}
 	defer allocatedDevices.Delete(serial)
@@ -227,7 +228,8 @@ func handleDevice(device *gousb.Device) error {
 }
 
 func closeWithLog(msg string, closeable func() error) {
-	slog.Info("closing", "what", msg)
+	// 改为Debug防止刷屏
+	slog.Debug("closing", "what", msg)
 	err := closeable()
 	if err != nil {
 		slog.Error("failed closing", "err", err)
